@@ -1,0 +1,29 @@
+<?php
+    require_once "C:/xampp/htdocs/chamadoReal/src/models/User.php";
+
+    class LoginController{
+        private $user;
+        public function __construct(){
+            $this->user = [
+                new User(1,'izaque@teste.com.br', '1234', 1),
+              ];
+
+    }
+    public function auntenticar($email, $password){
+        foreach ($this->user as $user){     
+            if ($user->email === $email && $user->verificarSenha($password) == $password){
+
+                $_SESSION ['auntenticar'] = 'SIM';
+                $_SESSION['id'] = $user -> id;
+                $_SESSION['profile_id'] = $user -> profile_id;
+                header('Location: ../chamadoReal/view/home.php');
+                exit;
+            }
+        }    
+        $_SESSION ['auntenticar'] = 'NAO';
+        header ('location: index.php?login =erro');
+        exit;   
+    }
+
+}
+?>
